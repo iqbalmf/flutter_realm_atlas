@@ -1,5 +1,3 @@
-# flutter_realm_atlas
-
 A new Flutter project.
 
 ## Getting Started
