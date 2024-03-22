@@ -1,44 +1,51 @@
-import '../models/user_schema.dart';
+import 'package:flutter_realm_atlas/data/datasource/realm_helper.dart';
+import 'package:realm/realm.dart';
+
+import '../models/user_schema.dart' as users;
 
 abstract class UserRemoteDataSource {
-  Future<User> createUser(String username, String password, String name);
+  Future<users.User> createUser(String username, String password, String name);
 
-  Future<User> updateUser(String name);
+  Future<users.User> updateUser(String name);
 
-  Future<void> deleteUser(User user);
+  Future<void> deleteUser(users.User user);
 
-  Future<List<User>> readUsers();
+  Future<List<users.User>> readUsers();
 
-  Future<User> readUserByUsername(String username);
+  Future<users.User?> readUserByUsername(String username);
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
+  RealmHelper realm;
+
+  UserRemoteDataSourceImpl(this.realm);
+
   @override
-  Future<User> createUser(String username, String password, String name) {
-    // TODO: implement createUser
-    throw UnimplementedError();
+  Future<users.User> createUser(String username, String password, String name) async {
+    final newUser = users.User(ObjectId(), username, password, name);
+    realm.write(() => realm.add(newUser));
+    return newUser;
   }
 
   @override
-  Future<void> deleteUser(User user) {
-    // TODO: implement deleteUser
-    throw UnimplementedError();
+  Future<void> deleteUser(users.User user) async {
+    realm.write(() => realm.delete(user));
   }
 
   @override
-  Future<User> readUserByUsername(String username) {
-    // TODO: implement readUserByUsername
-    throw UnimplementedError();
+  Future<users.User?> readUserByUsername(String username) async {
+    final result = realm.query<users.User>("username == \$0", [username]);
+    return result.firstOrNull;
   }
 
   @override
-  Future<List<User>> readUsers() {
-    // TODO: implement readUsers
-    throw UnimplementedError();
+  Future<List<users.User>> readUsers() async {
+    final result = realm.all<users.User>();
+    return result.toList();
   }
 
   @override
-  Future<User> updateUser(String name) {
+  Future<users.User> updateUser(String name) {
     // TODO: implement updateUser
     throw UnimplementedError();
   }

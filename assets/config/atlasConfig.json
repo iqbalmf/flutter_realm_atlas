@@ -1,0 +1,5 @@
+{
+  "appId": "data-redci",
+  "baseUrl": "https://services.cloud.mongodb.com",
+  "dataExplorerLink": "https://cloud.mongodb.com/links/65fa9aafcb593e674c20ed5d/explorer/cluster-test/database/collection/find"
+}
