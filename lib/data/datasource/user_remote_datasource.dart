@@ -22,25 +22,25 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<users.User> createUser(String username, String password, String name) async {
-    final newUser = users.User(ObjectId(), username, password, name);
-    realm.write(() => realm.add(newUser));
+    final newUser = users.User(ObjectId(), name: name, password: password, username: username);
+    realm.realm.write(() => realm.realm.add(newUser));
     return newUser;
   }
 
   @override
   Future<void> deleteUser(users.User user) async {
-    realm.write(() => realm.delete(user));
+    realm.realm.write(() => realm.realm.delete(user));
   }
 
   @override
   Future<users.User?> readUserByUsername(String username) async {
-    final result = realm.query<users.User>("username == \$0", [username]);
+    final result = realm.realm.query<users.User>("username == \$0", [username]);
     return result.firstOrNull;
   }
 
   @override
   Future<List<users.User>> readUsers() async {
-    final result = realm.all<users.User>();
+    final result = realm.realm.all<users.User>();
     return result.toList();
   }
 

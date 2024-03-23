@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_realm_atlas/data/datasource/realm_helper.dart';
+import 'package:flutter_realm_atlas/data/datasource/user_remote_datasource.dart';
+import 'package:flutter_realm_atlas/data/repository/user_repository_impl.dart';
 import 'package:flutter_realm_atlas/domain/repository/user_repository.dart';
 import 'package:flutter_realm_atlas/domain/usecase/create_user_use_case.dart';
 import 'package:realm/realm.dart';
 
 void main() {
+  
+  UserRemoteDataSourceImpl dataSourceImpl = UserRemoteDataSourceImpl(RealmHelper());
+  UserRepositoryImpl repo = UserRepositoryImpl(dataSourceImpl);
+  repo.createUser("iqbalfauzan", "test123baru", "Iqbal Muh Fauzan");
+  
+  
   runApp(MyApp());
 }
 

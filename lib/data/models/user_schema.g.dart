@@ -9,15 +9,15 @@ part of 'user_schema.dart';
 // ignore_for_file: type=lint
 class User extends _User with RealmEntity, RealmObjectBase, RealmObject {
   User(
-    ObjectId id,
-    String username,
-    String password,
-    String name,
-  ) {
+    ObjectId id, {
+    String? name,
+    String? password,
+    String? username,
+  }) {
     RealmObjectBase.set(this, '_id', id);
-    RealmObjectBase.set(this, 'username', username);
-    RealmObjectBase.set(this, 'password', password);
     RealmObjectBase.set(this, 'name', name);
+    RealmObjectBase.set(this, 'password', password);
+    RealmObjectBase.set(this, 'username', username);
   }
 
   User._();
@@ -28,21 +28,21 @@ class User extends _User with RealmEntity, RealmObjectBase, RealmObject {
   set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
 
   @override
-  String get username =>
-      RealmObjectBase.get<String>(this, 'username') as String;
+  String? get name => RealmObjectBase.get<String>(this, 'name') as String?;
   @override
-  set username(String value) => RealmObjectBase.set(this, 'username', value);
+  set name(String? value) => RealmObjectBase.set(this, 'name', value);
 
   @override
-  String get password =>
-      RealmObjectBase.get<String>(this, 'password') as String;
+  String? get password =>
+      RealmObjectBase.get<String>(this, 'password') as String?;
   @override
-  set password(String value) => RealmObjectBase.set(this, 'password', value);
+  set password(String? value) => RealmObjectBase.set(this, 'password', value);
 
   @override
-  String get name => RealmObjectBase.get<String>(this, 'name') as String;
+  String? get username =>
+      RealmObjectBase.get<String>(this, 'username') as String?;
   @override
-  set name(String value) => RealmObjectBase.set(this, 'name', value);
+  set username(String? value) => RealmObjectBase.set(this, 'username', value);
 
   @override
   Stream<RealmObjectChanges<User>> get changes =>
@@ -55,11 +55,12 @@ class User extends _User with RealmEntity, RealmObjectBase, RealmObject {
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(User._);
-    return const SchemaObject(ObjectType.realmObject, User, 'User', [
-      SchemaProperty('id', RealmPropertyType.objectid, mapTo: '_id'),
-      SchemaProperty('username', RealmPropertyType.string, primaryKey: true),
-      SchemaProperty('password', RealmPropertyType.string),
-      SchemaProperty('name', RealmPropertyType.string),
+    return const SchemaObject(ObjectType.realmObject, User, 'user', [
+      SchemaProperty('id', RealmPropertyType.objectid,
+          mapTo: '_id', primaryKey: true),
+      SchemaProperty('name', RealmPropertyType.string, optional: true),
+      SchemaProperty('password', RealmPropertyType.string, optional: true),
+      SchemaProperty('username', RealmPropertyType.string, optional: true),
     ]);
   }
 }

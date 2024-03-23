@@ -9,7 +9,7 @@ class UserRepositoryImpl extends UserRepository {
   Future<UserEntity> createUser(String username, String password, String name) async {
     try{
       final result = await userRemoteDataSource.createUser(username, password, name);
-      var userEntity = UserEntity(result.username, result.name);
+      var userEntity = UserEntity(result.username!, result.name!);
       return userEntity;
     } catch(e) {
       print(e.toString());
